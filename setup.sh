@@ -1,12 +1,12 @@
 #!/bin/bash
 
 function install_dependencies {
-if dpkg -s build-essential autoconf libtool pkg-config python-dev-is-python3 > /dev/null 2>&1; then
+if dpkg -s build-essential autoconf libtool pkg-config libsasl2-dev python-dev-is-python3 > /dev/null 2>&1; then
     echo "All necessary packages are installed"
 else
     echo "One or more necessary packages are not installed"
     sudo apt-get update
-    sudo apt-get install -y build-essential autoconf libtool pkg-config python-dev-is-python3
+    sudo apt-get install -y build-essential autoconf libtool pkg-config libsasl2-dev python-dev-is-python3
 fi
 }
 
