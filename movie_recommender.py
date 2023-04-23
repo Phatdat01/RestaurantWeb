@@ -28,7 +28,7 @@ show_recommended_movies_btn = search_layout.button("search")
 # add widgets on sidebar
 recommended_movie_num = st.sidebar.slider("Recommended movie number", min_value=5, max_value=10)
 if recommended_movie_num:
-    const.MOVIE_NUMBER = recommended_movie_num
+    const.RES_NUMBER = recommended_movie_num
 show_score = st.sidebar.checkbox("Show score")
 
 # create horizontal layouts for movies
