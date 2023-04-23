@@ -1,7 +1,7 @@
 import streamlit as st
 import constants as const
 from script.utils import fetch_poster
-
+from PIL import Image
 
 def initialize_res_widget(cfg):
     """here we create empty blanks for all recommended restaurants
@@ -25,6 +25,10 @@ def show_recommended_res_info(recommended_res, res_cols, show_score):
         with c:
             # st.markdown(f"<a style='display: block; text-align: center;' href='{l}'>{t}</a>", unsafe_allow_html=True)
             st.markdown(f"<a style='display: block; text-align: center;'>{t}</a>", unsafe_allow_html=True)
+            try:
+                p=image = Image.open(p)
+            except:
+                pass
             st.image(p)
             if show_score:
                 st.write(round(s, 3))

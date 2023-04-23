@@ -8,7 +8,7 @@ from script.utils import get_recommendations
 def weighted_average_based_recommendations():
     """we have already saved dataframe which is sorted based on scores.
     and just read and get top res"""
-    with open('data/res_score.pickle', 'rb') as handle:
+    with open('data/res_scores.pickle', 'rb') as handle:
         ress = pickle.load(handle)
     ress = ress.head(const.RES_NUMBER)
     ress = ress[["business_id", "name", "score"]]
@@ -16,13 +16,11 @@ def weighted_average_based_recommendations():
     return ress
 
 
-def contend_based_recommendations(titles):
+def contend_based_recommendations(res,titles):
     """read matrix create similarity function and call main function"""
     tfidf_matrix = scipy.sparse.load_npz('data/res_matrix.npz')
     cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
-    with open('data/res_df.pickle', 'rb') as handle:
-        ress = pickle.load(handle)
-    return get_recommendations(ress, titles, cosine_sim)
+    return get_recommendations(res, titles, cosine_sim)
 
 
 # def contend_based_recommendations_extra(res, titles):

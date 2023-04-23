@@ -22,11 +22,11 @@ with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # # load main movie dataframe
-# with open('data/movie_df.pickle', 'rb') as handle:
-#     movie = pickle.load(handle)
+with open('data/res_df.pickle', 'rb') as handle:
+    res = pickle.load(handle)
 
-result=spark.read.json('./data/ress_df.json')
-res = [row[0] for row in result.select('name').distinct().collect()]
+# result=spark.read.json('./data/ress_df.json')
+# res = [row[0] for row in result.select('name').distinct().collect()]
 
 st.markdown('# Restaurant Recommender system')
 social_components = open("assets/social_components.html", 'r', encoding='utf-8')
@@ -34,7 +34,7 @@ components.html(social_components.read())
 
 # add search panel and search button
 main_layout, search_layout = st.columns([10, 1])
-options = main_layout.multiselect('Which restaurant do you like?', res)
+options = main_layout.multiselect('Which restaurant do you like?', res["name"].unique())
 show_recommended_res_btn = search_layout.button("search")
 
 # add widgets on sidebar
@@ -54,7 +54,7 @@ show_recommended_res_info(score_based_recommended_res, col_for_score_based, show
 
 # when search clicked
 if show_recommended_res_btn:
-    contend_based_recommended_res = contend_based_recommendations(options)
+    contend_based_recommended_res = contend_based_recommendations(res,options)
     show_recommended_res_info(contend_based_recommended_res, col_for_content_based, show_score)
 
     # contend_extra_based_recommended_res = contend_based_recommendations_extra(movie, options)

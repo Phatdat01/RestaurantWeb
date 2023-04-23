@@ -15,10 +15,11 @@ imageJson=spark.read.json('../../temp/yelp_image_photos.json')
 
 def fetch_poster(res_id):
     try:
+        full_path="D:/temp/photos/"
         photo=imageJson.filter(col('business_id')==res_id).take(1)[0][3]
         return full_path+photo+".jpg"
     except:
-        return "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/706px-Google_%22G%22_Logo.svg.png"
+        return "https://thuvienlogo.com/data/03/logo-nha-hang-dep-07.jpg"
 
 
 def get_recommendations(res, names, cosine_sim):
