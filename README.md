@@ -1,13 +1,22 @@
-# Movie_Recommendartion
+# Restaurant_Recommendartion
 
-In this repo we implement a demo for movie recommendation.<br> 
-We're working on getting the majority of those systems here and it will be a good resource for study purposes.<br>
-Feel free to fork the repository and make it for any other product recommendation needs 
-```
-requirements.txt
+recommend to create virtual environment, eg python with Virtual env, conda with conda Virtual env
+
+## Main WEB
+
+<img title="res" src="./assets/res.png">
+
+Conda
 ```
 conda create --name env_name python==3.8
 conda activate env_name
 conda install --file requirements.txt
+streamlit run restaurant.py
+```
+Python:
+```
+py python -m venv VirtualEnv
+.\VirtualEnv\Scripts\activate  
+pip install -r requirements.txt
 streamlit run restaurant.py
 ```
