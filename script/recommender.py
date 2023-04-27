@@ -1,7 +1,7 @@
 import scipy
 import pickle
 from sklearn.metrics.pairwise import linear_kernel, cosine_similarity
-import constants as const
+import recommender.RestaurantWeb.app.constants as const
 from script.utils import get_recommendations
 
 

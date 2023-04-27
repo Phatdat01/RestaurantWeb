@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 from script.recommender import contend_based_recommendations, weighted_average_based_recommendations, contend_based_recommendations_extra
 from config import score_based_cfg, content_based_cfg, content_extra_based_cfg
 from UI.widgets import initialize_movie_widget, show_recommended_movie_info
-import constants as const
+import recommender.RestaurantWeb.app.constants as const
 st.set_page_config(page_title="Recommender system", layout="wide")
 
 

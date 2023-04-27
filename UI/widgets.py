@@ -1,5 +1,5 @@
 import streamlit as st
-import constants as const
+import recommender.RestaurantWeb.app.constants as const
 from script.utils import movie_link, fetch_poster
 
 

@@ -1,6 +1,6 @@
 import pandas as pd
 import requests
-import constants as const
+import recommender.RestaurantWeb.app.constants as const
 
 
 def movie_link(movie_id):
