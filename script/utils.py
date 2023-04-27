@@ -1,6 +1,6 @@
 import pandas as pd
 import requests
-import constants as const
+import config.constants as const
 
 import findspark
 findspark.init()

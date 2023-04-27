@@ -1,5 +1,5 @@
 import streamlit as st
-import constants as const
+import config.constants as const
 from script.utils import fetch_poster
 from PIL import Image
 
