@@ -2,9 +2,9 @@ import pickle
 import streamlit as st
 import streamlit.components.v1 as components
 from script.recommender import contend_based_recommendations, weighted_average_based_recommendations
-from config import score_based_cfg, content_based_cfg, content_extra_based_cfg
+from config.config import score_based_cfg, content_based_cfg, content_extra_based_cfg
 from UI.widgets import initialize_res_widget, show_recommended_res_info
-import constants as const
+import config.constants as const
 import findspark
 findspark.init()
 from pyspark.sql import SparkSession

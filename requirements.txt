@@ -1,4 +1,4 @@
-scipy==1.7.1
+scipy==1.7.2
 requests==2.24.0
 numpy
 pandas==1.4.0
@@ -8,7 +8,12 @@ pandas_profiling==3.1.0
 wordcloud==1.8.1
 pywaffle==0.6.4
 squarify==0.4.3
-pyspark==2.4.0
+# pyspark==2.4.0
 matplotlib
 pywaffle
 squarify
+pyspark==3.3.2
+findspark==1.4.2
+delta-spark==2.3.0
+streamlit-authenticator
+delta-sharing
