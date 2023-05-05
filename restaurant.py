@@ -18,7 +18,7 @@ st.set_page_config(page_title="Recommender system", layout="wide")
 
 
 # add styling
-with open('style.css') as f:
+with open('./assets/style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # # load main movie dataframe

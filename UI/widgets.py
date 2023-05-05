@@ -24,7 +24,7 @@ def show_recommended_res_info(recommended_res, res_cols, show_score):
     for c, t, s, p in zip(res_cols, res_name, res_scores, posters):#, links):
         with c:
             # st.markdown(f"<a style='display: block; text-align: center;' href='{l}'>{t}</a>", unsafe_allow_html=True)
-            st.markdown(f"<a style='display: block; text-align: center;'>{t}</a>", unsafe_allow_html=True)
+            st.markdown(f"<a style='display: block; text-align: center;' onclick='my_function()'>{t}</a> ", unsafe_allow_html=True)
             try:
                 p=image = Image.open(p)
             except:
@@ -32,4 +32,26 @@ def show_recommended_res_info(recommended_res, res_cols, show_score):
             st.image(p)
             if show_score:
                 st.write(round(s, 3))
-                
+    
+    # js = """
+    # <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    # <script>
+    # $(document).on("click", "#button", function() {
+    #     Streamlit.sendMessage({event: "my_event"});
+    # });
+    # </script>
+    # """
+    # for c, t, s, p in zip(res_cols, res_name, res_scores, posters):#, links):
+    #     with c:
+    #         # st.markdown(f"<a style='display: block; text-align: center;' href='{l}'>{t}</a>", unsafe_allow_html=True)
+    #         st.markdown(f"<button id='button' style='background-color: transparent;\
+    #     color: white;\
+    #     border-color: transparent;\
+    #     cursor: pointer;display: block; text-align: center;' onclick='my_function()'>{t}</button> ", unsafe_allow_html=True)
+    #         try:
+    #             p=image = Image.open(p)
+    #         except:
+    #             pass
+    #         st.image(p)
+    #         if show_score:
+    #             st.write(round(s, 3))
