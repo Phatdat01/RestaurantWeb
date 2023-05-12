@@ -19,9 +19,12 @@ if recommended_res_num:
     const.RES_NUMBER = recommended_res_num
 show_score = st.sidebar.checkbox("Show score")
 
-def Detail(business_id,res):
+def Detail(name,res=res):
     # An Item
-    selected_rows = fullRes.loc[fullRes["business_id"] == business_id]
+    const.name=None
+    st.empty()
+    selected_rows = fullRes.loc[fullRes["name"] == name]
+    business_id=selected_rows.iloc[0]['business_id']
     image=fetch_poster(business_id)
     with open('assets/style.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -40,11 +43,11 @@ def Detail(business_id,res):
     col_for_content_based = initialize_res_widget(content_based_cfg)
     contend_based_recommended_res = contend_based_recommendations(res,[selected_rows.iloc[0]['name']])
     show_recommended_res_info(contend_based_recommended_res, col_for_content_based, show_score)
+    if const.name!=None:
+        if const.name in res["name"].values:
+            Detail(const.name,res)
+        else:
+            st.warning("The restaurant was remove from visible!")
 
-    # e = st.StreamlitEventQueue.get_nowait()
-    # if e:
-    #     print("precieve")
-    #     if e.type == "my_event":
-    #         Detail('0bPLkL0QhhPO5kt1_EXmNQ')
-
-Detail('NDwoKO79_T49UEKVDlHd3A',res)
+# Detail('Sustainable Wine Tours',res)
+Detail('Southside  Hardware',res)

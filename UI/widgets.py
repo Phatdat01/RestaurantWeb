@@ -1,9 +1,11 @@
-import streamlit as st
 import constants as const
 from script.utils import fetch_poster
 from PIL import Image
+import sys
+sys.path.append('../')
+import constants as const
 
-def initialize_res_widget(cfg):
+def initialize_res_widget(st):
     """here we create empty blanks for all recommended restaurants
     and add description and title from appropriate config file"""
 
@@ -13,45 +15,43 @@ def initialize_res_widget(cfg):
             st.empty()
     return res_cols
 
+def detail_item(business_id,selected_rows,st):
+    image=fetch_poster(business_id)
+    # Use the container class to wrap your elements
+    detail = open("assets/detail.html", 'r', encoding='utf-8').read()
+    detail=detail.replace("{{ img }}", image)
+    detail=detail.replace("{{ name }}", selected_rows.iloc[0]['name'])
+    detail=detail.replace("{{ categories }}", selected_rows.iloc[0]['categories'])
+    detail=detail.replace("{{ add }}", selected_rows.iloc[0]['address'])
+    detail=detail.replace("{{ score }}", str(round(selected_rows.iloc[0]['score'],2)))
+    is_open="Opening" if selected_rows.iloc[0]['is_open']==1 else 'Closed'
+    detail=detail.replace("{{ is_open }}", is_open)
+    st.markdown(detail, unsafe_allow_html=True)
 
-def show_recommended_res_info(recommended_res, res_cols, show_score):
+def show_recommended_res_info(recommended_res, res_cols, show_score,st):
     """in this function we get all data what we want to show and put in on webpage"""
     res_ids = recommended_res["business_id"]
     res_name = recommended_res["name"]
     res_scores = recommended_res["score"]
     posters = [fetch_poster(i) for i in res_ids]
-    # links = [res_link(i) for i in res_ids]
-    for c, t, s, p in zip(res_cols, res_name, res_scores, posters):#, links):
-        with c:
-            # st.markdown(f"<a style='display: block; text-align: center;' href='{l}'>{t}</a>", unsafe_allow_html=True)
-            st.markdown(f"<a style='display: block; text-align: center;' onclick='my_function()'>{t}</a> ", unsafe_allow_html=True)
+    
+    for index,(c, name, score, img) in enumerate(zip(res_cols, res_name, res_scores, posters)):
+        with c:  
+            if st.button(name) and name:
+                const.name=name
+            st.markdown("""<style>.element-container.css-1047zxe.e1tzin5v3 .row-widget.stButton>* {
+                                padding: 0;
+                                border: 0;
+                                margin: 0;
+                                color: white;
+                                background-color: transparent;
+                        }
+                        </style>
+                        """,unsafe_allow_html=True)
             try:
-                p=image = Image.open(p)
+                img = Image.open(img)
             except:
                 pass
-            st.image(p)
+            st.image(img)
             if show_score:
-                st.write(round(s, 3))
-    
-    # js = """
-    # <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    # <script>
-    # $(document).on("click", "#button", function() {
-    #     Streamlit.sendMessage({event: "my_event"});
-    # });
-    # </script>
-    # """
-    # for c, t, s, p in zip(res_cols, res_name, res_scores, posters):#, links):
-    #     with c:
-    #         # st.markdown(f"<a style='display: block; text-align: center;' href='{l}'>{t}</a>", unsafe_allow_html=True)
-    #         st.markdown(f"<button id='button' style='background-color: transparent;\
-    #     color: white;\
-    #     border-color: transparent;\
-    #     cursor: pointer;display: block; text-align: center;' onclick='my_function()'>{t}</button> ", unsafe_allow_html=True)
-    #         try:
-    #             p=image = Image.open(p)
-    #         except:
-    #             pass
-    #         st.image(p)
-    #         if show_score:
-    #             st.write(round(s, 3))
+                st.write(round(score, 3))
