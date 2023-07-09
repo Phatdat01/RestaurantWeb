@@ -9,14 +9,14 @@ from pyspark.ml.recommendation import ALSModel
 ## rank, iter, reg is param of model
 ## justTrain: "model"(yes) or "rmse"(no) 
 ## fullData: "full data for train"(yes) or "split"(no)
-def trainModel(data,rank=4,iter=4,reg=0.35,fullData=True,justTrain=True):
+def trainModel(data,rank=4,iters=4,reg=0.35,fullData=True,justTrain=True):
     newData=preprocessingData(data)
     if fullData==True:
             testData=data
-            model=train(data)
+            model=train(data,rank,iters,reg)
     else:
         trainData,testData=splitData(data)
-        model=train(trainData)
+        model=train(trainData,rank,iters,reg)
     if justTrain==False:
         predictions=predictData(model,testData)
         rmse=evaluateResult(predictions)
@@ -50,13 +50,13 @@ def splitData(data,ratio=0.3):
     newRowTest=training.orderBy(col("date").desc()).limit(numNewTrain)
     del numNewTrain
     # Each test/train data, remove old and add new data
-    training=training.subtract(newRowTest).union(rowNewTrain)
+    training=training.subtract(newRowTest).union(newRowTrain)
     testing=testing.subtract(newRowTrain).union(newRowTest)
     del newRowTest,newRowTrain
     return training,testing
 
-def train(trainData):
-    als= ALS(rank=rank, maxIter=iter, regParam=reg, userCol="businessid", itemCol="userid", ratingCol="stars", nonnegative=True,implicitPrefs = False,coldStartStrategy="drop")
+def train(trainData,rankk,iters,reg):
+    als= ALS(rank=rank, maxIter=iters, regParam=reg, userCol="businessid", itemCol="userid", ratingCol="stars", nonnegative=True,implicitPrefs = False,coldStartStrategy="drop")
     model = als.fit(trainData)
     return model
 
@@ -97,7 +97,7 @@ def preprocessingData(data):
     buRatings=data.groupBy("business_id").count()
     window = Window.orderBy(col('business_id'))
     buRatings = buRatings.withColumn('businessid', row_number().over(window))
-    buRatings= buRating.select('business_id','businessid')
+    buRatings= buRatings.select('business_id','businessid')
 
     # Join to get cols userid and businessid
     newratings=data.join(userRatings, ['user_id'])
