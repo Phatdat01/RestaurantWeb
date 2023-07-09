@@ -12,11 +12,11 @@ from datetime import datetime
 ## fullData: "full data for train"(yes) or "split"(no)
 def trainModel(data,rank=4,iters=4,reg=0.35,fullData=True,justTrain=True):
     newData=preprocessingData(data)
-    if fullData==True:
-            testData=data
-            model=train(data,rank,iters,reg)
+    if fullData:
+            testData=newData
+            model=train(newData,rank,iters,reg)
     else:
-        trainData,testData=splitData(data)
+        trainData,testData=splitData(newData)
         model=train(trainData,rank,iters,reg)
     if justTrain==False:
         predictions=predictData(model,testData)
