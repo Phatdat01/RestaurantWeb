@@ -55,7 +55,7 @@ def splitData(data,ratio=0.3):
     del newRowTest,newRowTrain
     return training,testing
 
-def train(trainData,rankk,iters,reg):
+def train(trainData,rank,iters,reg):
     als= ALS(rank=rank, maxIter=iters, regParam=reg, userCol="businessid", itemCol="userid", ratingCol="stars", nonnegative=True,implicitPrefs = False,coldStartStrategy="drop")
     model = als.fit(trainData)
     return model
