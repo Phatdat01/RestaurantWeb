@@ -2,6 +2,7 @@ import pickle
 from script.recommender import contend_based_recommendations, weighted_average_based_recommendations,read_item
 from UI.widgets import initialize_res_widget, show_recommended_res_info, detail_item,show_recom_user
 import constants as const
+from config import line1,line2,line3
 import findspark
 findspark.init()
 from pyspark.sql import SparkSession
@@ -72,9 +73,9 @@ def Detail(name,res=res):
 def main():
     streamlit=st
     # create horizontal layouts for res
-    col_for_score_based = initialize_res_widget(streamlit)
-    col_for_content_based = initialize_res_widget(streamlit)
-    col_for_user=initialize_res_widget(streamlit)
+    col_for_score_based = initialize_res_widget(line1,streamlit)
+    col_for_content_based = initialize_res_widget(line2,streamlit)
+    col_for_user=initialize_res_widget(line3,streamlit)
     # col_for_content_based_extra = initialize_res_widget(content_extra_based_cfg)
 
     # show recommended res based on weighted average (this is same for all res)

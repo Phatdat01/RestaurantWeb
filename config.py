@@ -1,3 +1,16 @@
+line1=dict(
+     title="Score Based",
+    description=""
+)
+line2=dict(
+     title="Content Based",
+    description=""
+)
+line3=dict(
+     title="ALS",
+    description=""
+)
+
 main_page_cfg = dict(
     description="""K-means clustering is one of the simplest and popular unsupervised machine learning algorithms.
     Typically, unsupervised algorithms make inferences from datasets using only input vectors without referring to 

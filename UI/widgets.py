@@ -5,10 +5,11 @@ import sys
 sys.path.append('../')
 import constants as const
 
-def initialize_res_widget(st):
+def initialize_res_widget(cfg,st):
     """here we create empty blanks for all recommended restaurants
     and add description and title from appropriate config file"""
-
+    with st.expander(cfg["title"],):
+        st.markdown(cfg["description"])
     res_cols = st.columns(const.RES_NUMBER)
     for c in res_cols:
         with c:
