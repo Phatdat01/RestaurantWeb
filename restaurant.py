@@ -74,8 +74,8 @@ def main():
     streamlit=st
     # create horizontal layouts for res
     col_for_score_based = initialize_res_widget(line1,streamlit)
-    col_for_content_based = initialize_res_widget(line2,streamlit)
     col_for_user=initialize_res_widget(line3,streamlit)
+    col_for_content_based = initialize_res_widget(line2,streamlit)
     # col_for_content_based_extra = initialize_res_widget(content_extra_based_cfg)
 
     # show recommended res based on weighted average (this is same for all res)
