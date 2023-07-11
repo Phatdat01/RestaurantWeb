@@ -64,7 +64,8 @@ def show_recom_user(userdf,model,df,explode,col):
     ### check if exist at web model
     nrecommendations=nrecommendations.filter(col('businessid').isin(list(df["businessid"])))  
     ### will change to business ad gold layer
-    nrecommendations = nrecommendations.filter(col('businessid').isin(nrecommendations.select('businessid')))
+    businessid_list = [row['businessid'] for row in nrecommendations.select('businessid').collect()]
+    nrecommendations = nrecommendations.filter(col('businessid').isin(businessid_list))
     nrecommendations=nrecommendations.limit(const.RES_NUMBER)
     lst = nrecommendations.select('businessid').rdd.flatMap(lambda x: x).collect()
     col1_list = list(lst)
