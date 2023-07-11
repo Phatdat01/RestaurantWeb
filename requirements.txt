@@ -12,3 +12,4 @@ pywaffle
 squarify
 --use-feature=2020-resolver pandas-profiling
 findspark
+altair==4.1.0
