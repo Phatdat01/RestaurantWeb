@@ -55,3 +55,15 @@ def show_recommended_res_info(recommended_res, res_cols, show_score,st):
             st.image(img)
             if show_score:
                 st.write(round(score, 3))
+
+def show_recom_user(userdf,model,df,explode,col):
+    userSubsetRecs = model.recommendForUserSubset(userdf, 1000)
+    nrecommendations = userSubsetRecs\
+        .withColumn("rec_exp", explode("recommendations"))\
+        .select('userid', col("rec_exp.businessid"), col("rec_exp.rating"))
+    nrecommendations=nrecommendations.filter(col('businessid').isin(list(df["businessid"])))    
+    nrecommendations=nrecommendations.limit(const.MOVIE_NUMBER)
+    lst = nrecommendations.select('businessid').rdd.flatMap(lambda x: x).collect()
+    col1_list = list(lst)
+    lstres = df[df['businessid'].isin(col1_list)]
+    return lstres[["business_id", "name", "score"]]

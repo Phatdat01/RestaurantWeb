@@ -1,11 +1,14 @@
 import pickle
 from script.recommender import contend_based_recommendations, weighted_average_based_recommendations,read_item
-from UI.widgets import initialize_res_widget, show_recommended_res_info, detail_item
+from UI.widgets import initialize_res_widget, show_recommended_res_info, detail_item,show_recom_user
 import constants as const
 import findspark
 findspark.init()
 from pyspark.sql import SparkSession
-
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+from pyspark.sql.functions import explode,col
+from pyspark.ml.recommendation import ALSModel
+model=ALSModel.load("./data/save")
 spark = SparkSession.builder \
     .appName("app") \
     .master("local") \
@@ -14,6 +17,7 @@ spark = SparkSession.builder \
 st=const.st
 components=st.components.v1
 st.set_page_config(page_title="Recommender system", layout="wide")
+
 
 
 # add styling
@@ -70,18 +74,26 @@ def main():
     # create horizontal layouts for res
     col_for_score_based = initialize_res_widget(streamlit)
     col_for_content_based = initialize_res_widget(streamlit)
+    col_for_user=initialize_res_widget(streamlit)
     # col_for_content_based_extra = initialize_res_widget(content_extra_based_cfg)
 
     # show recommended res based on weighted average (this is same for all res)
     score_based_recommended_res = weighted_average_based_recommendations(fullRes)
     show_recommended_res_info(score_based_recommended_res, col_for_score_based, show_score,streamlit)
+    
+    userid = [ [2]]
+    useridColumns = StructType([StructField("userid", IntegerType())])
+    deptDF = spark.createDataFrame(data=userid, schema = useridColumns)
+
+    als_recommend=show_recom_user(deptDF,model,fullRes,explode,col)
+    show_recommended_res_info(als_recommend, col_for_user, show_score,streamlit)
 
     # when search clicked
     if show_recommended_res_btn:
         contend_based_recommended_res = contend_based_recommendations(res,options)
         show_recommended_res_info(contend_based_recommended_res, col_for_content_based, show_score,streamlit)
 
-    emptyStreamlit(res,streamlit,None,col_for_score_based,col_for_content_based)
+        emptyStreamlit(res,streamlit,None,col_for_score_based,col_for_content_based)
 
 if __name__ == "__main__":
     print(const.name)
