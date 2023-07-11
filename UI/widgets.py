@@ -61,7 +61,10 @@ def show_recom_user(userdf,model,df,explode,col):
     nrecommendations = userSubsetRecs\
         .withColumn("rec_exp", explode("recommendations"))\
         .select('userid', col("rec_exp.businessid"), col("rec_exp.rating"))
-    nrecommendations=nrecommendations.filter(col('businessid').isin(list(df["businessid"])))    
+    ### check if exist at web model
+    nrecommendations=nrecommendations.filter(col('businessid').isin(list(df["businessid"])))  
+    ### will change to business ad gold layer
+    nrecommendations = nrecommendations.filter(col('businessid').isin(nrecommendations.select('businessid')))
     nrecommendations=nrecommendations.limit(const.RES_NUMBER)
     lst = nrecommendations.select('businessid').rdd.flatMap(lambda x: x).collect()
     col1_list = list(lst)
