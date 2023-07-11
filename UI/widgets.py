@@ -62,7 +62,7 @@ def show_recom_user(userdf,model,df,explode,col):
         .withColumn("rec_exp", explode("recommendations"))\
         .select('userid', col("rec_exp.businessid"), col("rec_exp.rating"))
     nrecommendations=nrecommendations.filter(col('businessid').isin(list(df["businessid"])))    
-    nrecommendations=nrecommendations.limit(const.MOVIE_NUMBER)
+    nrecommendations=nrecommendations.limit(const.RES_NUMBER)
     lst = nrecommendations.select('businessid').rdd.flatMap(lambda x: x).collect()
     col1_list = list(lst)
     lstres = df[df['businessid'].isin(col1_list)]
