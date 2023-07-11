@@ -1,13 +1,13 @@
 line1=dict(
-     title="Score Based",
+     title="Best Restaurant by Score",
     description=""
 )
 line2=dict(
-     title="Content Based",
+     title="Best Restaurant by Search",
     description=""
 )
 line3=dict(
-     title="ALS",
+     title="Best Restaurant for You",
     description=""
 )
 
