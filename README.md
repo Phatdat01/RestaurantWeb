@@ -1,22 +1,34 @@
-# Restaurant_Recommendartion
+# lakehouse on local 
 
-recommend to create virtual environment, eg python with Virtual env, conda with conda Virtual env
+## System Architecture
+![lakehouse](./.images/Data-System-Architecture.png)
 
-## Main WEB
 
-<img title="res" src="./assets/res.png">
+## Lakehouse Architecture
+![lakehouse](./.images/Lakehouse-Architecture.png)
 
-Conda
+## Prepare infrastructure
+```bash
+docker compose up -d
 ```
-conda create --name env_name python==3.8
-conda activate env_name
-conda install --file requirements.txt
-streamlit run restaurant.py
+
+## Prepare data
+- Upload data to MinIO, see [README](../minio/README.md)
+
+## Orchestrate pipeline
+- Orchestrate pipeline, see [README](../airflow/README.md)
+
+## Query data
+- Query data, query on metabase, see [README](../metabase/README.md)
+
+## Clean up
+```bash
+docker compose down
 ```
-Python:
-```
-py python -m venv VirtualEnv
-.\VirtualEnv\Scripts\activate  
-pip install -r requirements.txt
-streamlit run restaurant.py
-```
+
+## References
+- [Lakehouse](https://databricks.com/discover/data-management)
+- [Lakehouse Architecture](https://databricks.com/session_na21/lakehouse-architecture)
+- [Lakehouse: A New Generation of Open Platform for Data Analytics](https://databricks.com/session_na21/lakehouse-a-new-generation-of-open-platform-for-data-analytics)
+
+
